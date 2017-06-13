@@ -9,10 +9,13 @@ var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
+var _ = require('lodash')
 
+
+const config = require(path.join(__dirname, '/../src/config.js')) || {}
 
 // 如果预先定义过环境变量，就将其赋值给`ASSET_PATH`变量，否则赋值为根目录
-const ASSET_PATH = process.env.ASSET_PATH || '/'
+const PUBLIC_PATH = process.env.PUBLIC_PATH || '/'
 
 module.exports = {
     entry: {
@@ -25,13 +28,11 @@ module.exports = {
          * hot热替换模式不支持chunkhash
          */
         // filename: '[name].[chunkhash].js',
-        publicPath: ASSET_PATH,
+        publicPath: PUBLIC_PATH,
         sourceMapFilename: '[name].map'
     },
 
-    externals:{
-        'THREE':'window.THREE',
-    },
+    externals: config.extensions,
 
     resolve: {
         extensions: ['.ts', '.js', '.json'],
@@ -74,6 +75,12 @@ module.exports = {
                 })
             },
             {
+                test: /\.ejs$/,
+                use: {
+                    loader: 'ejs-loader'
+                }
+            },
+            {
                 test: /\.(jpg|png|gif)$/,
                 use: {
                     loader: 'file-loader',
@@ -93,28 +100,29 @@ module.exports = {
 
         new DashboardPlugin(),
 
-        new HtmlWebpackPlugin({
-            template: 'src/index.html',
-            // chunksSortMode: 'dependency'
-        }),
+        new HtmlWebpackPlugin(_.assign({
+            template: 'src/index.ejs',
+            /**
+             * 这里都会带上/后缀
+             * 因为对于vendor，此插件对于有无/后缀都正常
+             * 为了兼容'/'的情况，选择都加
+             */
+            publicPath: PUBLIC_PATH[PUBLIC_PATH.length - 1] === '/' ? PUBLIC_PATH : PUBLIC_PATH + '/',
+            chunksSortMode: 'dependency',
+        }, config)),
 
         new ExtractTextPlugin('styles.[chunkhash].css'),
 
         new webpack.DefinePlugin({
-            'process.env.ASSET_PATH': JSON.stringify(ASSET_PATH)
+            'process.env.PUBLIC_PATH': JSON.stringify(PUBLIC_PATH)
         }),
-
-
-        // new webpack.ProvidePlugin({
-        //     // 当 identifier 被当作未赋值的变量时，module 就会自动被加载，并且 identifier 会被这个 module 输出的内容所赋值
-        //     'window.THREE': 'THREE',
-        // }),
 
         new CopyWebpackPlugin([
             {
                 from: path.join(__dirname, '/../public'),
-                to: path.join(__dirname, '/../dist/public'),
+                to: path.join(__dirname, '/../dist'),
             }
         ])
-    ]
+    ].concat(config.provide ?
+        new webpack.ProvidePlugin(config.provide) : [])
 }
