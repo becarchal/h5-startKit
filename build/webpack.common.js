@@ -8,6 +8,7 @@ var path = require('path')
 var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
+var CopyWebpackPlugin = require('copy-webpack-plugin')
 
 
 // 如果预先定义过环境变量，就将其赋值给`ASSET_PATH`变量，否则赋值为根目录
@@ -26,6 +27,10 @@ module.exports = {
         // filename: '[name].[chunkhash].js',
         publicPath: ASSET_PATH,
         sourceMapFilename: '[name].map'
+    },
+
+    externals:{
+        'THREE':'window.THREE',
     },
 
     resolve: {
@@ -70,15 +75,14 @@ module.exports = {
             },
             {
                 test: /\.(jpg|png|gif)$/,
-                use: 'file-loader'
+                use: {
+                    loader: 'file-loader',
+                }
             },
             {
                 test: /\.(woff|woff2|eot|ttf|svg)$/,
                 use: {
-                    loader: 'url-loader',
-                    options: {
-                        limit: 100000
-                    }
+                    loader: 'file-loader',
                 }
             }
         ]
@@ -91,7 +95,7 @@ module.exports = {
 
         new HtmlWebpackPlugin({
             template: 'src/index.html',
-            chunksSortMode: 'dependency'
+            // chunksSortMode: 'dependency'
         }),
 
         new ExtractTextPlugin('styles.[chunkhash].css'),
@@ -101,10 +105,16 @@ module.exports = {
         }),
 
 
-        new webpack.ProvidePlugin({
-            // 当 identifier 被当作未赋值的变量时，module 就会自动被加载，并且 identifier 会被这个 module 输出的内容所赋值
-            _m: 'moment',
-        }),
+        // new webpack.ProvidePlugin({
+        //     // 当 identifier 被当作未赋值的变量时，module 就会自动被加载，并且 identifier 会被这个 module 输出的内容所赋值
+        //     'window.THREE': 'THREE',
+        // }),
 
+        new CopyWebpackPlugin([
+            {
+                from: path.join(__dirname, '/../public'),
+                to: path.join(__dirname, '/../dist/public'),
+            }
+        ])
     ]
 }

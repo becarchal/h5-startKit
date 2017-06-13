@@ -1,98 +1,190 @@
-import Detector from '../lib/Detector'
-import {
-    scene, camera, renderer, controls,
-    envlight, spotLight, plane,
-    helper, axis, stats, container, modelsByControl
-} from './base'
-import { config } from './config'
-import { init as initPane } from './pane'
-import * as modals from './modal'
-import { forEach, find } from 'lodash'
-import { handlePreAddSceneModal, event } from './utils'
+import Stats from '../lib/stats.min.js'
 
-import './index.less'
+var camera, scene, renderer;
 
-/**
- * 启动
- */
+var texture_placeholder,
+	isUserInteracting = false,
+	onMouseDownMouseX = 0, onMouseDownMouseY = 0,
+	lon = 90, onMouseDownLon = 0,
+	lat = 0, onMouseDownLat = 0,
+	phi = 0, theta = 0,
+	target = new THREE.Vector3();
+
+init();
+animate();
+
 function init() {
-    scene.add(camera)
 
-    scene.add(envlight)
+	var container, mesh;
 
-    scene.add(spotLight)
+	container = document.getElementById('container');
 
-    scene.add(plane)
+	camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1100);
 
-    scene.add(helper)
+	scene = new THREE.Scene();
 
-    scene.add(axis)
+	texture_placeholder = document.createElement('canvas');
+	texture_placeholder.width = 128;
+	texture_placeholder.height = 128;
 
-    scene.add(controls.transformControl)
+	var context = texture_placeholder.getContext('2d');
+	context.fillStyle = 'rgb( 200, 200, 200 )';
+	context.fillRect(0, 0, texture_placeholder.width, texture_placeholder.height);
 
-    container.appendChild(renderer.domElement)
+	var materials = [
 
-    container.appendChild(stats.dom)
+		loadTexture(require('./img/px.jpg')), // right
+		loadTexture(require('./img/nx.jpg')), // left
+		loadTexture(require('./img/py.jpg')), // top
+		loadTexture(require('./img/ny.jpg')), // bottom
+		loadTexture(require('./img/pz.jpg')), // back
+		loadTexture(require('./img/nz.jpg'))  // front
 
-    /**
-     *  浏览器发生变化自动调整视口
-     */
-    window.addEventListener('resize', onWindowResize, false);
+	];
 
-    initPane()
+	mesh = new THREE.Mesh(new THREE.BoxGeometry(300, 300, 300, 7, 7, 7), materials);
+	mesh.scale.x = - 1;
+	scene.add(mesh);
 
-    load()
+	renderer = new THREE.CanvasRenderer();
+	renderer.setPixelRatio(window.devicePixelRatio);
+	renderer.setSize(window.innerWidth, window.innerHeight);
+	container.appendChild(renderer.domElement);
 
-    animate()
-}
+	document.addEventListener('mousedown', onDocumentMouseDown, false);
+	document.addEventListener('mousemove', onDocumentMouseMove, false);
+	document.addEventListener('mouseup', onDocumentMouseUp, false);
+	document.addEventListener('wheel', onDocumentMouseWheel, false);
 
-function load() {
-    let saveData = localStorage.getItem(config.localStorageFieldName)
+	document.addEventListener('touchstart', onDocumentTouchStart, false);
+	document.addEventListener('touchmove', onDocumentTouchMove, false);
 
-    if (!saveData)
-        return;
+	//
 
-    saveData = JSON.parse(saveData)
-    forEach(saveData, ({ name, data }) => {
-        const modalDesc = find(modals, ({ paneCfg: { name: name2 } }) =>
-            name === name2)
+	window.addEventListener('resize', onWindowResize, false);
 
-        if (modalDesc) {
-            let newModal = modalDesc.render(data)
-
-            handlePreAddSceneModal({ modal: newModal, name })
-
-        }
-    })
 }
 
 function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
+
+	camera.aspect = window.innerWidth / window.innerHeight;
+	camera.updateProjectionMatrix();
+
+	renderer.setSize(window.innerWidth, window.innerHeight);
+
 }
 
+function loadTexture(path) {
+
+	var texture = new THREE.Texture(texture_placeholder);
+	var material = new THREE.MeshBasicMaterial({ map: texture, overdraw: 0.5 });
+
+	var image = new Image();
+	image.onload = function () {
+
+		texture.image = this;
+		texture.needsUpdate = true;
+
+	};
+	image.src = path;
+
+	return material;
+
+}
+
+function onDocumentMouseDown(event) {
+
+	event.preventDefault();
+
+	isUserInteracting = true;
+
+	onPointerDownPointerX = event.clientX;
+	onPointerDownPointerY = event.clientY;
+
+	onPointerDownLon = lon;
+	onPointerDownLat = lat;
+
+}
+
+function onDocumentMouseMove(event) {
+
+	if (isUserInteracting === true) {
+
+		lon = (onPointerDownPointerX - event.clientX) * 0.1 + onPointerDownLon;
+		lat = (event.clientY - onPointerDownPointerY) * 0.1 + onPointerDownLat;
+
+	}
+
+}
+
+function onDocumentMouseUp(event) {
+
+	isUserInteracting = false;
+
+}
+
+function onDocumentMouseWheel(event) {
+
+	camera.fov += event.deltaY * 0.05;
+	camera.updateProjectionMatrix();
+
+}
+
+
+function onDocumentTouchStart(event) {
+
+	if (event.touches.length == 1) {
+
+		event.preventDefault();
+
+		onPointerDownPointerX = event.touches[0].pageX;
+		onPointerDownPointerY = event.touches[0].pageY;
+
+		onPointerDownLon = lon;
+		onPointerDownLat = lat;
+
+	}
+
+}
+
+function onDocumentTouchMove(event) {
+
+	if (event.touches.length == 1) {
+
+		event.preventDefault();
+
+		lon = (onPointerDownPointerX - event.touches[0].pageX) * 0.1 + onPointerDownLon;
+		lat = (event.touches[0].pageY - onPointerDownPointerY) * 0.1 + onPointerDownLat;
+
+	}
+
+}
 
 function animate() {
-    requestAnimationFrame(animate)
-    render()
 
-    // controls.update(clock.getDelta())
-    // transformControl.update()
+	requestAnimationFrame(animate);
+	update();
+
 }
 
-export function render() {
-    event.dispatch('onRender')
+function update() {
 
-    stats.update()
-    renderer.render(scene, camera)
-}
+	if (isUserInteracting === false) {
 
+		lon += 0.1;
 
-if (Detector.webgl) {
-    init()
-    animate()
-} else {
-    var warning = Detector.getWebGLErrorMessage()
-    document.getElementById(config.containerId).appendChild(warning)
+	}
+
+	lat = Math.max(- 85, Math.min(85, lat));
+	phi = THREE.Math.degToRad(90 - lat);
+	theta = THREE.Math.degToRad(lon);
+
+	target.x = 500 * Math.sin(phi) * Math.cos(theta);
+	target.y = 500 * Math.cos(phi);
+	target.z = 500 * Math.sin(phi) * Math.sin(theta);
+
+	camera.lookAt(target);
+
+	renderer.render(scene, camera);
+
 }
