@@ -77,7 +77,11 @@ module.exports = {
             {
                 test: /\.ejs$/,
                 use: {
-                    loader: 'ejs-loader'
+                    loader: 'ejs-loader',
+                    options: {
+                        interpolate: '\\{\\{(.+?)\\}\\}',
+                        evaluate: '\\[\\[(.+?)\\]\\]'
+                    }
                 }
             },
             {
