@@ -3,6 +3,7 @@ const CommonConfig = require('./webpack.common.js');
 var webpack = require('webpack')
 var path = require('path')
 
+const config = require(path.join(__dirname, '/../src/config.js')) || {}
 
 module.exports = Merge(CommonConfig, {
     devtool: 'cheap-module-source-map',
@@ -13,7 +14,7 @@ module.exports = Merge(CommonConfig, {
 
     devServer: {
         port: 8888,
-        host: '10.10.10.114',
+        host: config.host || 'localhost',
         historyApiFallback: true,
         noInfo: false,
         stats: 'minimal',
