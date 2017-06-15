@@ -3,10 +3,14 @@ import './index.less'
 $.fn.extend({
 	animateCss: function (animationName, cb) {
 		var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
-		this.addClass('animated ' + animationName).one(animationEnd, function () {
-			$(this).removeClass('animated ' + animationName);
-			cb && cb.call(this)
-		});
+
+		return new Promise((resolve, reject) => {
+			this.addClass('animated ' + animationName).one(animationEnd, function () {
+				$(this).removeClass('animated ' + animationName);
+				cb && cb.call(this)
+				resolve(this)
+			})
+		}).catch(err => alert(err))
 	}
 });
 
@@ -55,9 +59,43 @@ const swiper = new Swiper('.swiper-container', {
 				$('#seventeen_b_text').show().animateCss('fadeInDown')
 				break;
 			case 7:
-				$('#last_text').show().animateCss('fadeInDown')
+				$('#last_text').show().animateCss('fadeIn').then(_this => {
+					setTimeout(() => {
+						Promise.all([
+							new Promise((re, rj) => {
+								$('#last_sofa').animateCss('fadeOutLeft').then(_this => $(_this).hide()).then(() => re())
+							}),
+							new Promise((re, rj) => {
+								$('#last_father').animateCss('fadeOutRight').then(_this => $(_this).hide()).then(() => re())
+							}),
+							new Promise((re, rj) => {
+								$(_this).animateCss('fadeOutLeft').then(_this => $(_this).hide()).then(() => re())
+
+							})
+						]).then(e => {
+							$('#last_1_text').show().animateCss('fadeIn').then(_this => {
+								setTimeout(() => {
+									$(_this).animateCss('fadeOut').then(_this => {
+										$(_this).hide()
+										$('#last_2_text').show().animateCss('fadeInDown')
+										$('#last_3_text').show().animateCss('fadeInUp')
+										setTimeout(() => {
+											$('.logo').animate({
+												opacity: '0.5'
+											})
+											$('#last_cover').show().animate({
+												opacity: '0.5'
+											})
+											$('#last_4_text').show().animateCss('fadeIn')
+										}, 2000)
+									})
+								}, 2000)
+							})
+						})
+					}, 2000)
+				})
 				break;
-				
+
 		}
 	}
 })
@@ -66,6 +104,7 @@ const swiper = new Swiper('.swiper-container', {
  * 事件绑定
  */
 $(document).ready(function () {
+	swiper.slideTo(7)
 	$('#home_text').show().animateCss('fadeInDown')
 })
 
