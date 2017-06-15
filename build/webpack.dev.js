@@ -13,7 +13,7 @@ module.exports = Merge(CommonConfig, {
     },
 
     devServer: {
-        port: 8888,
+        port: config.port || 8888,
         host: config.host || 'localhost',
         historyApiFallback: true,
         noInfo: false,
