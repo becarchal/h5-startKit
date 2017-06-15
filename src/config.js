@@ -3,5 +3,6 @@
  */
 module.exports = {
     // extensions,
-    // provide
+    // provide,
+    host: '10.10.10.69'
 }
