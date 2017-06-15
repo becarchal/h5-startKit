@@ -2,10 +2,17 @@ import './index.less'
 
 $.fn.extend({
 	animateCss: function (animationName, cb) {
+
 		var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
 
 		return new Promise((resolve, reject) => {
-			this.addClass('animated ' + animationName).one(animationEnd, function () {
+			const page_touchstart = e => e.preventDefault()
+
+			this[0].addEventListener('touchstart', page_touchstart, false)
+
+			this.addClass('animated ' + animationName).one(animationEnd, () => {
+				this[0].removeEventListener('touchstart', page_touchstart, false)
+
 				$(this).removeClass('animated ' + animationName);
 				cb && cb.call(this)
 				resolve(this)
@@ -39,61 +46,63 @@ const swiper = new Swiper('.swiper-container', {
 		switch (swiper.activeIndex) {
 			case 1:
 				$('#three_text').show().animateCss('fadeInDown')
+				tar.hitTag('enter-page2')
 				break;
 			case 2:
 				$('#three_a_text').show().animateCss('fadeInDown')
 				$('#three_b_text').show().animateCss('fadeInDown')
+				$('#three_a_tada').animateCss('tada')
+				tar.hitTag('enter-page3')
 				break;
 			case 3:
 				$('#seven_text').show().animateCss('fadeInDown')
+				tar.hitTag('enter-page4')
 				break;
 			case 4:
 				$('#seven_a_text').show().animateCss('fadeInDown')
 				$('#seven_b_text').show().animateCss('fadeInDown')
+				tar.hitTag('enter-page5')
 				break;
 			case 5:
 				$('#seventeen_text').show().animateCss('fadeInDown')
+				tar.hitTag('enter-page6')
 				break;
 			case 6:
 				$('#seventeen_a_text').show().animateCss('fadeInDown')
 				$('#seventeen_b_text').show().animateCss('fadeInDown')
+				tar.hitTag('enter-page7')
 				break;
 			case 7:
-				$('#last_text').show().animateCss('fadeIn').then(_this => {
+				$('#last_text').show().animateCss('fadeInLeft')
+				$('#last_sofa').show().animateCss('fadeInLeft')
+				$('#last_father').show().animateCss('fadeInRight')
+				setTimeout(() => {
+					swiper.slideTo(8, duration)
+				}, 3500)
+				tar.hitTag('enter-page8')
+				break;
+			case 8:
+				$('#last1_1_text').show().animateCss('fadeIn').then(_this => {
 					setTimeout(() => {
-						Promise.all([
-							new Promise((re, rj) => {
-								$('#last_sofa').animateCss('fadeOutLeft').then(_this => $(_this).hide()).then(() => re())
-							}),
-							new Promise((re, rj) => {
-								$('#last_father').animateCss('fadeOutRight').then(_this => $(_this).hide()).then(() => re())
-							}),
-							new Promise((re, rj) => {
-								$(_this).animateCss('fadeOutLeft').then(_this => $(_this).hide()).then(() => re())
-
-							})
-						]).then(e => {
-							$('#last_1_text').show().animateCss('fadeIn').then(_this => {
-								setTimeout(() => {
-									$(_this).animateCss('fadeOut').then(_this => {
-										$(_this).hide()
-										$('#last_2_text').show().animateCss('fadeInDown')
-										$('#last_3_text').show().animateCss('fadeInUp')
-										setTimeout(() => {
-											$('.logo').animate({
-												opacity: '0.5'
-											})
-											$('#last_cover').show().animate({
-												opacity: '0.5'
-											})
-											$('#last_4_text').show().animateCss('fadeIn')
-										}, 2000)
-									})
-								}, 2000)
-							})
-						})
-					}, 2000)
+						swiper.slideTo(9, duration)
+					}, 3500)
 				})
+				tar.hitTag('enter-page9')
+				break;
+			case 9:
+				$('#last2_2_text').show().animateCss('fadeInDown')
+				$('#last2_3_text').show().animateCss('fadeInUp')
+				setTimeout(() => {
+					$('.logo').animate({
+						opacity: '0.2'
+					})
+					$('#last2_cover').show().animate({
+						opacity: '0.75'
+					})
+					$('#last2_5_text').show().animateCss('fadeIn')
+					$('#last2_4_text').show().animateCss('fadeIn')
+				}, 3500)
+				tar.hitTag('enter-page10')
 				break;
 
 		}
@@ -104,12 +113,14 @@ const swiper = new Swiper('.swiper-container', {
  * 事件绑定
  */
 $(document).ready(function () {
-	swiper.slideTo(7)
+	tar.hitTag('enter-page1')
+
+	$('#home_body').animateCss('tada')
 	$('#home_text').show().animateCss('fadeInDown')
 })
 
 $('#home_btn').click(function () {
-	$(this).animateCss('tada', function () {
+	$(this).animateCss('pulse', function () {
 		swiper.slideTo(sceneIndexMap['three_scene'], duration)
 	})
 })
@@ -117,7 +128,7 @@ $('#home_btn').click(function () {
 $('#three_btn_a').click(function () {
 	$('#three_a').show()
 
-	$(this).animateCss('tada', function () {
+	$(this).animateCss('pulse', function () {
 		swiper.slideTo(sceneIndexMap['three_ctr'], duration)
 	})
 })
@@ -125,13 +136,13 @@ $('#three_btn_a').click(function () {
 $('#three_btn_b').click(function () {
 	$('#three_b').show()
 
-	$(this).animateCss('tada', function () {
+	$(this).animateCss('pulse', function () {
 		swiper.slideTo(sceneIndexMap['three_ctr'], duration)
 	})
 })
 
 $('.to-seven-btn').click(function () {
-	$(this).animateCss('tada', function () {
+	$(this).animateCss('pulse', function () {
 		swiper.slideTo(sceneIndexMap['seven_scene'], duration)
 	})
 })
@@ -139,7 +150,7 @@ $('.to-seven-btn').click(function () {
 $('#seven_ctr_btn_a').click(function () {
 	$('#seven_a').show()
 
-	$(this).animateCss('tada', function () {
+	$(this).animateCss('pulse', function () {
 		swiper.slideTo(sceneIndexMap['seven_ctr'], duration)
 	})
 })
@@ -147,14 +158,14 @@ $('#seven_ctr_btn_a').click(function () {
 $('#seven_ctr_btn_b').click(function () {
 	$('#seven_b').show()
 
-	$(this).animateCss('tada', function () {
+	$(this).animateCss('pulse', function () {
 		swiper.slideTo(sceneIndexMap['seven_ctr'], duration)
 	})
 })
 
 $('.to-seventeen-btn').click(function () {
 
-	$(this).animateCss('tada', function () {
+	$(this).animateCss('pulse', function () {
 		swiper.slideTo(sceneIndexMap['seventeen_scene'], duration)
 	})
 })
@@ -162,7 +173,7 @@ $('.to-seventeen-btn').click(function () {
 $('#seventeen_zl_btn_a').click(function () {
 	$('#seventeen_a').show()
 
-	$(this).animateCss('tada', function () {
+	$(this).animateCss('pulse', function () {
 		swiper.slideTo(sceneIndexMap['seventeen_ctr'], duration)
 	})
 })
@@ -170,14 +181,13 @@ $('#seventeen_zl_btn_a').click(function () {
 $('#seventeen_zl_btn_b').click(function () {
 	$('#seventeen_b').show()
 
-	$(this).animateCss('tada', function () {
+	$(this).animateCss('pulse', function () {
 		swiper.slideTo(sceneIndexMap['seventeen_ctr'], duration)
 	})
 })
 
 $('.to-last-btn').click(function () {
-	$(this).animateCss('tada', function () {
+	$(this).animateCss('pulse', function () {
 		swiper.slideTo(sceneIndexMap['last'], duration)
 	})
 })
-
