@@ -12,6 +12,18 @@ module.exports = Merge(CommonConfig, {
         filename: '[name].[hash].js',
     },
 
+    module: {
+        rules: [
+            {
+                test: /\.(jpe?g|png|gif|jpg|svg)$/i,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'file-loader'
+                }
+            }
+        ]
+    },
+
     devServer: {
         port: config.port || 8888,
         host: config.host || 'localhost',

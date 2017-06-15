@@ -9,6 +9,43 @@ module.exports = Merge(CommonConfig, {
         filename: '[name].[chunkhash].js',
     },
 
+    module: {
+        rules: [{
+            test: /\.(jpe?g|png|gif|jpg|svg)$/i,
+            exclude: /node_modules/,
+            use: [
+                'file-loader',
+                {
+                    loader: 'image-webpack-loader',
+                    options: {
+                        mozjpeg: {
+                            quality: 65
+                        },
+                        pngquant: {
+                            quality: "65-90",
+                            speed: 4
+                        },
+                        svgo: {
+                            plugins: [{
+                                removeViewBox: false
+                            }, {
+                                removeEmptyAttrs: false
+                            }]
+                        },
+                        gifsicle: {
+                            optimizationLevel: 7,
+                            interlaced: false
+                        },
+                        optipng: {
+                            optimizationLevel: 7,
+                            interlaced: false
+                        }
+                    }
+                }
+            ]
+        }]
+    },
+
     plugins: [
 
         new webpack.optimize.UglifyJsPlugin({
@@ -22,7 +59,7 @@ module.exports = Merge(CommonConfig, {
             },
             comments: false
         }),
-        
+
         /**
          * 假设vendor是从node_modules里导入的
          */
@@ -44,6 +81,14 @@ module.exports = Merge(CommonConfig, {
 
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production')
-        })
+        }),
+
+
+
     ]
 })
+
+
+
+
+

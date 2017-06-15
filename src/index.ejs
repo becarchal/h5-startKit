@@ -2,20 +2,15 @@
 <html lang="en">
 
 <head>
+    <!--<base href="http://s.wx.tarh5.cn/lianxiang/lxjd/">-->
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title> 项目名称 </title>
-    <link href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css" rel="stylesheet">
-    <link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
-</head>
-
-<body>
-    <div class="container"></div>
-    <!--<script src="http://js.tarsocial.com/h5stat-2.1.1.min.js"></script>
+    <title> 中国太平 </title>
+    <script src="http://js.tarsocial.com/h5stat-2.1.1.min.js"></script>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-    <script src="http://s.wx.tarh5.cn/common/js/weixincontrol.2.2.js"></script>-->
-    <!--<script>
+    <script src="http://s.wx.tarh5.cn/common/js/weixincontrol.2.2.js"></script>
+    <script>
         /**
          * 常量字段
          * api_host 接口地址，默认测试环境
@@ -35,9 +30,9 @@
             share_appid: 'wxfa065f3046ad9c21',
             wx_appid: 'wxae443fc803e5af1c',
             tar_tid: '',
-            tar_token: '',
-            title: '',
-            desc: '',
+            tar_token: '44d1591b0f26222613947c4d3c26ee67',
+            title: '爸爸再打我一次!',
+            desc: '能不能打到你呢?',
             imgurl: '',
             wx_link: window.location.href.split('?')[0],
             success: function () { },
@@ -55,8 +50,7 @@
             //正式环境
             Constant.api_host = 'http://h5wxapi2.tarsocial.com';
             Constant.share_appid = '';
-            Constant.wx_appid = '';
-            Constant.tar_tid = '';
+            Constant.tar_tid = '109509';
         }
         /**
         *tarinit监控配置
@@ -80,7 +74,7 @@
         */
         var wx_userinfo, tar_userinfo;
         var tar_info = {
-            tar_debug: 　false,
+            tar_debug: false,
             tar_token: Constant.tar_token,
             tar_tid: Constant.tar_tid,
             tar_userinfo: tar_userinfo
@@ -103,7 +97,13 @@
             shareControl.tarinit(tar_info);
             shareControl.wxready(wx_share);
         });
-    </script>-->
+    </script>
+    <link href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container"></div>
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"></script>
     <script src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
 </body>
