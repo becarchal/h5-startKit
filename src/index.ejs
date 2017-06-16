@@ -11,7 +11,7 @@
     <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <script src="http://s.wx.tarh5.cn/common/js/weixincontrol.2.2.js"></script>
     <script>
-        /**
+       /**
          * 常量字段
          * api_host 接口地址，默认测试环境
          * share_appid 分享appid，测试环境需要，正式环境不需要（为空就行）
@@ -33,7 +33,7 @@
             tar_token: '44d1591b0f26222613947c4d3c26ee67',
             title: '爸爸再打我一次!',
             desc: '能不能打到你呢?',
-            imgurl: '',
+            imgurl: 'http://s.wx.tarh5.cn/taiping/fqj/share.png?v=2',
             wx_link: window.location.href.split('?')[0],
             success: function () { },
             cancel: function () { }
@@ -90,7 +90,7 @@
         }
         // 1.授权appid 2.snsaip_base隐性授权，snsapi_userinfo显性授权 3.分享appid 4.传入true，开启微信debug，默认为false，可以不传
         var WeiXincontrol = new WeiXinConfig();
-        WeiXincontrol.init(Constant.wx_appid, "snsapi_userinfo", Constant.share_appid);
+        WeiXincontrol.init(Constant.wx_appid, "snsapi_base", Constant.share_appid);
         WeiXincontrol.ready(function () {
             wx_userinfo = WeiXincontrol.getUserinfo();
             tar_info.tar_userinfo = [wx_userinfo];

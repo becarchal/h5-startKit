@@ -1,8 +1,8 @@
-var gulp = require('gulp');
-var tinypng = require('gulp-tinypng');
+const gulp = require('gulp');
+const zip = require('gulp-zip');
 
-gulp.task('default', function () {
-	gulp.src('dist/img/**/*.png')
-		.pipe(tinypng('gZAIYG-mATCSCAUFgn7RNwV2RG44wvHX'))
-		.pipe(gulp.dest('dist/img'));
-});
+gulp.task('default', () =>
+	gulp.src('dist/*')
+		.pipe(zip('dist.zip'))
+		.pipe(gulp.dest('./'))
+);
