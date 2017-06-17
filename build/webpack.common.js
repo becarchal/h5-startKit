@@ -1,7 +1,6 @@
 var ManifestPlugin = require('webpack-manifest-plugin')
 var ChunkManifestPlugin = require("chunk-manifest-webpack-plugin")
 var InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
 var WebpackChunkHash = require("webpack-chunk-hash")
 var DashboardPlugin = require('webpack-dashboard/plugin')
 var path = require('path')
@@ -105,7 +104,7 @@ module.exports = {
              * 因为对于vendor，此插件对于有无/后缀都正常
              * 为了兼容'/'的情况，选择都加
              */
-            publicPath: PUBLIC_PATH[PUBLIC_PATH.length - 1] === '/' ? PUBLIC_PATH : PUBLIC_PATH + '/',
+            publicPath: PUBLIC_PATH,
             chunksSortMode: 'dependency',
         }, config)),
 
