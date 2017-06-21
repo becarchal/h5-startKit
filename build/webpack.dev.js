@@ -6,7 +6,7 @@ var path = require('path')
 const config = require(path.join(__dirname, '/../src/config.js')) || {}
 
 module.exports = Merge(CommonConfig, {
-    devtool: 'cheap-module-source-map',
+    devtool: 'source-map',
 
     output: {
         filename: '[name].[hash].js',

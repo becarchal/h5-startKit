@@ -4,5 +4,7 @@
 module.exports = {
     // extensions,
     // provide,
-    host: '10.10.10.69'
+    // publicPath
+    host: '10.10.10.68',
+    port: 8888
 }
