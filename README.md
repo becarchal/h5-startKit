@@ -1,10 +1,24 @@
-# HpAvalon
+# 阿里云
 
-[在线文档](https://yangbin1994.gitbooks.io/hpavalon/content/)
+1. npm install ali-oss
 
-![dashbord](./meta/dashbord.gif)
+```javascript
+var OSS = require('ali-oss');
+var client = new OSS({
+  region: '<oss region>',
+  accessKeyId: '<Your accessKeyId>',
+  accessKeySecret: '<Your accessKeySecret>',
+  bucket: '<Your bucket name>'
+});]
+```
 
-![test](./meta/test.gif)
 
-
-
+# 查看Bucket列表
+```javascript
+co(function* () {
+  var result = yield client.listBuckets();
+  console.log(result);
+}).catch(function (err) {
+  console.log(err);
+});
+```

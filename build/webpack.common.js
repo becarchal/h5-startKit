@@ -9,12 +9,9 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
 var _ = require('lodash')
+var config = require('./helper').config
 
-
-const config = require(path.join(__dirname, '/../src/config.js')) || {}
-
-// 如果预先定义过环境变量，就将其赋值给`ASSET_PATH`变量，否则赋值为根目录
-const publicPath = config.publicPath || '/'
+const publicPath = process.env.PUBLIC_PATH || config.publicPath
 
 module.exports = {
     entry: {
@@ -95,8 +92,6 @@ module.exports = {
 
     plugins: [
 
-        new DashboardPlugin(),
-
         new HtmlWebpackPlugin(_.assign({
             template: 'src/index.ejs',
             /**
@@ -110,9 +105,12 @@ module.exports = {
 
         new ExtractTextPlugin('styles.[chunkhash].css'),
 
+<<<<<<< HEAD
         new webpack.DefinePlugin({
             'process.env.PUBLIC_PATH': JSON.stringify(publicPath)
         }),
+=======
+>>>>>>> master
 
         new CopyWebpackPlugin([
             {
