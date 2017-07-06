@@ -1,9 +1,13 @@
-var path = require('path')
+var fs = require('fs')
 
 module.exports = {
-    config: {
-        host: '0.0.0.0',
-        port: 80,
-        publicPath: '/'
+    //检测文件或者文件夹存在 nodeJS
+    fsExistsSync(path) {
+        try {
+            fs.accessSync(path, fs.F_OK);
+        } catch (e) {
+            return false;
+        }
+        return true;
     }
 }

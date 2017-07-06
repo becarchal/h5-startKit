@@ -8,8 +8,8 @@ var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
-var _ = require('lodash')
-var config = require('./helper').config
+var helper = require('./helper')
+var config = require('./config')
 
 const publicPath = process.env.PUBLIC_PATH || config.publicPath
 
@@ -92,7 +92,7 @@ module.exports = {
 
     plugins: [
 
-        new HtmlWebpackPlugin(_.assign({
+        new HtmlWebpackPlugin(Object.assign({
             template: 'src/index.ejs',
             /**
              * 这里都会带上/后缀
@@ -103,15 +103,16 @@ module.exports = {
             chunksSortMode: 'dependency',
         }, config)),
 
-        new ExtractTextPlugin('styles.[chunkhash].css'),
+        new ExtractTextPlugin('styles.[chunkhash].css')
 
 
+    ].concat(helper.fsExistsSync(path.join(__dirname, '/../public')) ?
         new CopyWebpackPlugin([
             {
                 from: path.join(__dirname, '/../public'),
                 to: path.join(__dirname, '/../dist'),
             }
-        ])
-    ].concat(config.provide ?
-        new webpack.ProvidePlugin(config.provide) : [])
+        ]) : [])
+        .concat(config.provide ?
+            new webpack.ProvidePlugin(config.provide) : [])
 }
