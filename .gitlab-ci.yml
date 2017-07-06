@@ -24,6 +24,6 @@ Deploy-Doc:
   script:
     - gitbook install
     - yarn doc:build # 构建文档
-    - rsync -vzrtopgl --progress _book/* root@10.163.248.149:/alidata/www/h5_doc --exclude ".gitignore"
+    - rsync -vzrtopgl --progress _book/* root@10.163.248.149:/alidata/www/h5_doc/${CI_BUILD_REF_NAME} --exclude ".gitignore"
   environment: production
   when: manual
