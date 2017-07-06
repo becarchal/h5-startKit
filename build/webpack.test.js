@@ -1,9 +1,10 @@
-const Merge = require('webpack-merge');
-const CommonConfig = require('./webpack.common.js');
-var webpack = require('webpack')
-var path = require('path')
-
 module.exports = {
+
+    resolve: {
+        extensions: ['.ts', '.js', '.json'],
+        // modules: [path.join(__dirname, 'src'), 'node_modules']
+    },
+
     module: {
         rules: [
             {
@@ -11,11 +12,13 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: [['env', { modules: false }]],
+                        presets: ['es2015', 'stage-0'],
+                        plugins: ['lodash']
                     }
                 },
-                exclude: /node_modules/,
+                exclude: /node_modules|lib/,
             }
         ]
+
     }
 }

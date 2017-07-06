@@ -4,7 +4,8 @@
     "build": "rimraf dist && webpack --progress --profile --colors --config ./build/webpack.prod.js",
     "dev": "webpack-dev-server --hot --inline --progress --profile --colors --config ./build/webpack.dev.js",
     "test": "./node_modules/karma-cli/bin/karma start",
-    "doc": "gitbook serve ./doc"
+    "doc:serve": "gitbook serve",
+    "doc:build": "gitbook build"
   },
   "dependencies": {
     "babel": "^6.23.0",
@@ -32,14 +33,12 @@
     "html-webpack-plugin": "^2.28.0",
     "image-webpack-loader": "^3.3.1",
     "inline-manifest-webpack-plugin": "^3.0.1",
-    "jasmine": "^2.6.0",
     "jquery": "^3.2.1",
     "json3": "^3.3.2",
     "karma": "^1.7.0",
     "karma-browserify": "^5.1.1",
     "karma-cli": "^1.0.1",
     "karma-coverage": "^1.1.1",
-    "karma-jasmine": "^1.1.0",
     "karma-mocha-reporter": "^2.2.3",
     "karma-phantomjs-launcher": "^1.0.4",
     "karma-should": "^1.0.0",
