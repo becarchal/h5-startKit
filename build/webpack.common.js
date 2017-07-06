@@ -32,6 +32,7 @@ module.exports = {
 
     resolve: {
         extensions: ['.ts', '.js', '.json'],
+        alias: config.alias
         // modules: [path.join(__dirname, 'src'), 'node_modules']
     },
 
