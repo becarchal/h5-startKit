@@ -4,8 +4,8 @@
     "build": "rimraf dist && webpack --progress --profile --colors --config ./build/webpack.prod.js",
     "dev": "webpack-dev-server --hot --inline --progress --profile --colors --config ./build/webpack.dev.js",
     "test": "./node_modules/karma-cli/bin/karma start",
-    "doc:serve": "gitbook serve ./doc",
-    "doc:build": "gitbook build ./doc"
+    "doc:serve": "gitbook serve",
+    "doc:build": "gitbook build"
   },
   "dependencies": {
     "babel": "^6.23.0",
