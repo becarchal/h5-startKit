@@ -9,12 +9,9 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
 var _ = require('lodash')
+var config = require('./helper').config
 
-
-const config = require(path.join(__dirname, '/../src/config.js')) || {}
-
-// 如果预先定义过环境变量，就将其赋值给`ASSET_PATH`变量，否则赋值为根目录
-const PUBLIC_PATH = process.env.PUBLIC_PATH || '/'
+const publicPath = process.env.PUBLIC_PATH || config.publicPath
 
 module.exports = {
     entry: {
@@ -27,7 +24,7 @@ module.exports = {
          * hot热替换模式不支持chunkhash
          */
         // filename: '[name].[chunkhash].js',
-        publicPath: PUBLIC_PATH,
+        publicPath,
         sourceMapFilename: '[name].map'
     },
 
@@ -95,8 +92,6 @@ module.exports = {
 
     plugins: [
 
-        new DashboardPlugin(),
-
         new HtmlWebpackPlugin(_.assign({
             template: 'src/index.ejs',
             /**
@@ -104,15 +99,12 @@ module.exports = {
              * 因为对于vendor，此插件对于有无/后缀都正常
              * 为了兼容'/'的情况，选择都加
              */
-            publicPath: PUBLIC_PATH,
+            publicPath,
             chunksSortMode: 'dependency',
         }, config)),
 
         new ExtractTextPlugin('styles.[chunkhash].css'),
 
-        new webpack.DefinePlugin({
-            'process.env.PUBLIC_PATH': JSON.stringify(PUBLIC_PATH)
-        }),
 
         new CopyWebpackPlugin([
             {

@@ -1,8 +1,8 @@
 {
   "scripts": {
     "zip": "./node_modules/.bin/gulp",
-    "prod": "rimraf dist && webpack-dashboard -- webpack --progress --profile --colors --config ./build/webpack.prod.js",
-    "dev": "webpack-dashboard -- webpack-dev-server --hot --inline --progress --profile --colors --config ./build/webpack.dev.js",
+    "build": "rimraf dist && webpack --progress --profile --colors --config ./build/webpack.prod.js",
+    "dev": "webpack-dev-server --hot --inline --progress --profile --colors --config ./build/webpack.dev.js",
     "test": "./node_modules/karma-cli/bin/karma start",
     "doc": "gitbook serve ./doc"
   },

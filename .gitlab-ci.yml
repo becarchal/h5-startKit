@@ -1,0 +1,28 @@
+Deploy-Prod:
+  stage: deploy
+  script:
+    - yarn # 安装依赖
+    - echo $CI_BUILD_REF_NAME
+    - PUBLIC_PATH=prod yarn build # 打包构建
+    - tar-cli fe_deploy -a bluefocus -s 60.205.225.141 --no-vhost 
+  environment: production
+  when: manual
+
+Deploy-Test:
+  stage: deploy
+  script:
+    - yarn # 安装依赖
+    - echo $CI_BUILD_REF_NAME
+    - PUBLIC_PATH="http://cdn.tarsocial.com/h5/${CI_BUILD_REF_NAME}/" yarn build # 打包构建
+    - tar-cli fe_deploy -a h5 -s 10.163.248.149 --no-vhost
+  environment: testing
+  when: manual
+
+Deploy-Doc:
+  stage: deploy
+  script:
+    - gitbook install
+    - yarn doc:build # 构建文档
+    - rsync -vzrtopgl --progress _book/* root@10.163.248.149:/alidata/www/fe_doc --exclude ".gitignore"
+  environment: production
+  when: manual
