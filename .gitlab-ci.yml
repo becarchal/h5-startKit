@@ -8,7 +8,7 @@ Deploy-Prod:
   environment: production
   when: manual
 
-Deploy-Test:
+Deploy-Dev:
   stage: deploy
   script:
     - yarn # 安装依赖
