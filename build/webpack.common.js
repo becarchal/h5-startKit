@@ -105,12 +105,6 @@ module.exports = {
 
         new ExtractTextPlugin('styles.[chunkhash].css'),
 
-<<<<<<< HEAD
-        new webpack.DefinePlugin({
-            'process.env.PUBLIC_PATH': JSON.stringify(publicPath)
-        }),
-=======
->>>>>>> master
 
         new CopyWebpackPlugin([
             {
