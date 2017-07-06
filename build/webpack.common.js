@@ -11,7 +11,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin')
 var helper = require('./helper')
 var config = require('./config')
 
-const publicPath = process.env.PUBLIC_PATH || config.publicPath
+const publicPath = process.env.PUBLIC_PATH || config.publicPath || '/'
 
 module.exports = {
     entry: {
