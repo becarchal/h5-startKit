@@ -1065,10 +1065,6 @@ boom@2.x.x:
   dependencies:
     hoek "2.x.x"
 
-bootstrap@3.3.7:
-  version "3.3.7"
-  resolved "http://registry.npm.taobao.org/bootstrap/download/bootstrap-3.3.7.tgz#5a389394549f23330875a3b150656574f8a9eb71"
-
 brace-expansion@^1.0.0:
   version "1.1.7"
   resolved "http://registry.npm.taobao.org/brace-expansion/download/brace-expansion-1.1.7.tgz#3effc3c50e000531fb720eaff80f0ae8ef23cf59"
@@ -1691,9 +1687,9 @@ create-hmac@^1.1.0, create-hmac@^1.1.2:
     create-hash "^1.1.0"
     inherits "^2.0.1"
 
-cross-env@^4.0.0:
-  version "4.0.0"
-  resolved "http://registry.npm.taobao.org/cross-env/download/cross-env-4.0.0.tgz#16083862d08275a4628b0b243b121bedaa55dd80"
+cross-env@^5.0.1:
+  version "5.0.1"
+  resolved "http://registry.npm.taobao.org/cross-env/download/cross-env-5.0.1.tgz#ff4e72ea43b47da2486b43a7f2043b2609e44913"
   dependencies:
     cross-spawn "^5.1.0"
     is-windows "^1.0.0"
@@ -2398,10 +2394,6 @@ executable@^1.0.0:
   dependencies:
     meow "^3.1.0"
 
-exit@^0.1.2:
-  version "0.1.2"
-  resolved "http://registry.npm.taobao.org/exit/download/exit-0.1.2.tgz#0632638f8d877cc82107d30a0fff1a17cba1cd0c"
-
 expand-braces@^0.1.1:
   version "0.1.2"
   resolved "http://registry.npm.taobao.org/expand-braces/download/expand-braces-0.1.2.tgz#488b1d1d2451cb3d3a6b192cfc030f44c5855fea"
@@ -2895,7 +2887,7 @@ glob2base@^0.0.12:
   dependencies:
     find-index "^0.1.1"
 
-glob@7.1.1, glob@^7.0.3, glob@^7.0.5, glob@^7.0.6, glob@^7.1.0, glob@^7.1.1:
+glob@7.1.1, glob@^7.0.3, glob@^7.0.5, glob@^7.1.0, glob@^7.1.1:
   version "7.1.1"
   resolved "http://registry.npm.taobao.org/glob/download/glob-7.1.1.tgz#805211df04faaf1c63a3600306cdf5ade50b2ec8"
   dependencies:
@@ -3774,18 +3766,6 @@ istanbul@^0.4.0:
     which "^1.1.1"
     wordwrap "^1.0.0"
 
-jasmine-core@~2.6.0:
-  version "2.6.1"
-  resolved "http://registry.npm.taobao.org/jasmine-core/download/jasmine-core-2.6.1.tgz#66a61cddb699958e3613edef346c996f6311fc3b"
-
-jasmine@^2.6.0:
-  version "2.6.0"
-  resolved "http://registry.npm.taobao.org/jasmine/download/jasmine-2.6.0.tgz#6b22e70883e8e589d456346153b4d206ddbe217f"
-  dependencies:
-    exit "^0.1.2"
-    glob "^7.0.6"
-    jasmine-core "~2.6.0"
-
 jodid25519@^1.0.0:
   version "1.0.2"
   resolved "http://registry.npm.taobao.org/jodid25519/download/jodid25519-1.0.2.tgz#06d4912255093419477d425633606e0e90782967"
@@ -3929,10 +3909,6 @@ karma-ie-launcher@^1.0.0:
   resolved "http://registry.npm.taobao.org/karma-ie-launcher/download/karma-ie-launcher-1.0.0.tgz#497986842c490190346cd89f5494ca9830c6d59c"
   dependencies:
     lodash "^4.6.1"
-
-karma-jasmine@^1.1.0:
-  version "1.1.0"
-  resolved "http://registry.npm.taobao.org/karma-jasmine/download/karma-jasmine-1.1.0.tgz#22e4c06bf9a182e5294d1f705e3733811b810acf"
 
 karma-mocha-reporter@^2.2.3:
   version "2.2.3"
@@ -6406,20 +6382,6 @@ tempfile@^1.0.0:
   dependencies:
     os-tmpdir "^1.0.0"
     uuid "^2.0.1"
-
-three.js@^0.77.1:
-  version "0.77.1"
-  resolved "http://registry.npm.taobao.org/three.js/download/three.js-0.77.1.tgz#07858a8749e4b627a31083252a2d987776cca32a"
-  dependencies:
-    three "0.77.0"
-
-three@0.77.0:
-  version "0.77.0"
-  resolved "http://registry.npm.taobao.org/three/download/three-0.77.0.tgz#8b0b1b00047689ceaa020d480a562ca60d87ff37"
-
-three@^0.85.2:
-  version "0.85.2"
-  resolved "http://registry.npm.taobao.org/three/download/three-0.85.2.tgz#8936f89c3668f7bf12f9b085ddf5dd409916ea27"
 
 throttleit@^1.0.0:
   version "1.0.0"

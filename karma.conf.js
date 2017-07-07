@@ -15,7 +15,7 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'src/**/*.test.js'
+      'test/**/*.test.js'
     ],
 
 
@@ -27,7 +27,7 @@ module.exports = function (config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'src/**/*.test.js': ['webpack']
+      'test/**/*.test.js': ['webpack']
     },
 
     webpack: require('./build/webpack.test.js'),
@@ -67,7 +67,9 @@ module.exports = function (config) {
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     // ['Chrome', 'IE', 'Firefox', 'Opera', 'Safari'],
-    browsers: ['Chrome', 'Firefox', 'Opera', 'Safari'],
+    browsers: ['Chrome'],
+    // browsers: ['Chrome', 'Firefox', 'Opera', 'Safari'],
+    // browsers: ['Chrome', 'Firefox', 'Opera', 'IE'],
 
 
     // Continuous Integration mode
