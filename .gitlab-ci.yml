@@ -20,6 +20,6 @@ Deploy-Doc:
   script:
     - gitbook install
     - yarn doc:build # 构建文档
-    - tar-cli fe_deploy -a h5doc -d _book --no-vhost
+    - rsync -vzrtopgl --progress _book/* root@10.163.248.149:/alidata/www/h5doc/${CI_BUILD_REF_NAME} --exclude ".gitignore"
   environment: production
   when: manual
