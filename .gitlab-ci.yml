@@ -11,7 +11,7 @@ Deploy-Test:
   stage: deploy
   script:
     - echo $CI_BUILD_REF_NAME
-    - tar-cli fe_deploy -r /alidata/www/h5mo -a h5wxfront -b "${CI_BUILD_REF_NAME}-test" -s 121.43.104.208 --no-vhost
+    - tar-cli fe_deploy -r /alidata/www/h5mo -a h5wxfront -c "${CI_BUILD_REF_NAME}-test" -s 121.43.104.208 --no-vhost
   environment: testing
   when: manual
 
