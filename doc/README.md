@@ -19,7 +19,7 @@
 | yarn dev | 启动本地node服务，可以通过`本地开发环境`浏览 | 实时监听文件保存变化，自动刷新页面 |
 | yarn test | 启动测试框架，会读取`test`下所有后缀为`*.test.js`的文件 | 支持[`should`](http://shouldjs.github.io/)语法 |
 | yarn doc:serve | 启动本地文档预览服务，可以通过`本地开发文档环境`浏览 | 实时监听文件保存变化，自动刷新页面；支持`markdown`|
-| yarn build:prod | 构建打包`生产环境`代码，打包完成后会在根目录下生成`dist`，重复打包，会自动删除`dist`然后再生成；构建完成之后推到`git`服务器，手动点击`生产环境``发布按钮` | 自动压缩代码图片，生成`contentHash`避免浏览器缓存|
+| yarn build:prod | 构建打包`生产环境`代码，打包完成后会在根目录下生成`dist`，重复打包，会自动删除`dist`然后再生成；构建完成之后推到`git`服务器，手动点击`生产环境-发布按钮` | 自动压缩代码图片，生成`contentHash`避免浏览器缓存|
 | yarn build:test | 和`yarn build:prod`一样，区别只在`生产环境`和`测试环境` | 同上 |
 
 # 环境
