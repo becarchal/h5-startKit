@@ -1,7 +1,8 @@
 {
   "scripts": {
     "zip": "./node_modules/.bin/gulp",
-    "build": "rimraf dist && webpack --progress --profile --colors --config ./build/webpack.prod.js",
+    "build:prod": "rimraf dist && cross-env PUBLIC_PATH=http://cdn.tarsocial.com/h5wxfront/$(git symbolic-ref --short HEAD)/ webpack --progress --profile --colors --config ./build/webpack.prod.js",
+    "build:test": "rimraf dist && cross-env PUBLIC_PATH=http://cdn.tarsocial.com/h5wxfront/$(git symbolic-ref --short HEAD)-test/ webpack --progress --profile --colors --config ./build/webpack.prod.js",
     "dev": "webpack-dev-server --hot --inline --progress --profile --colors --config ./build/webpack.dev.js",
     "test": "./node_modules/karma-cli/bin/karma start",
     "doc:serve": "gitbook serve",
@@ -20,7 +21,7 @@
     "browserify": "^14.3.0",
     "chunk-manifest-webpack-plugin": "^1.1.0",
     "copy-webpack-plugin": "^4.0.1",
-    "cross-env": "^4.0.0",
+    "cross-env": "^5.0.1",
     "css-loader": "^0.28.1",
     "dat.gui": "^0.6.1",
     "ejs": "^2.5.6",

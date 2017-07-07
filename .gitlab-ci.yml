@@ -1,20 +1,16 @@
 Deploy-Prod:
   stage: deploy
   script:
-    - yarn # 安装依赖
     - echo $CI_BUILD_REF_NAME
-    - PUBLIC_PATH="http://cdn.tarsocial.com/h5wxfront/${CI_BUILD_REF_NAME}/" yarn build # 打包构建
     - tar-cli fe_deploy -r /alidata/www/h5mo -a h5wxfront -s 121.43.121.2:120.26.223.123:120.55.86.185 --no-vhost
-  environment: testing
+  environment: production
   when: manual
 
 
 Deploy-Test:
   stage: deploy
-  script:
-    - yarn # 安装依赖
+  script:git symbolic-ref --short HEAD
     - echo $CI_BUILD_REF_NAME
-    - PUBLIC_PATH="http://cdn.tarsocial.com/h5wxfront/${CI_BUILD_REF_NAME}-test/" yarn build # 打包构建
     - tar-cli fe_deploy -r /alidata/www/h5mo -a h5wxfront -b "${CI_BUILD_REF_NAME}-test" -s 121.43.104.208 --no-vhost
   environment: testing
   when: manual
