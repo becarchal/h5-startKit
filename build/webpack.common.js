@@ -11,7 +11,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin')
 var helper = require('./helper')
 var config = require('./config')
 
-const publicPath =  process.env.PUBLIC_PATH || config.publicPath || '/'
+const publicPath = process.env.PUBLIC_PATH || config.publicPath || '/'
 
 module.exports = {
     entry: {
@@ -100,7 +100,7 @@ module.exports = {
              * 因为对于vendor，此插件对于有无/后缀都正常
              * 为了兼容'/'的情况，选择都加
              */
-            publicPath,
+            PUBLIC_PATH: publicPath,
             chunksSortMode: 'dependency',
         }, config)),
 
