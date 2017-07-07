@@ -25,8 +25,8 @@
 # 环境
 | 名称 | 地址 | 说明 |
 |-- |-- |-- |
-| 线上正式环境 | http://*.weixin.tarh5.cn/three_startKit/index.html | -- |
-| 线上测试环境 | http://h5wxfront.weisgj.com/three_startKit/index.html | -- |
+| 线上正式环境 | http://*.weixin.tarh5.cn/[分支名]/index.html | -- |
+| 线上测试环境 | http://h5wxfront.weisgj.com/[分支名]/index.html | -- |
 | 本地开发环境 | http://localhost/ | 可以在`build/config`配置主机和端口号等信息 |
 | 线上文档环境 | http://[分支名].h5doc.tarsocial.com | -- |
 | 本地开发文档环境 | http://localhost:4000/ | -- |
