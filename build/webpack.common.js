@@ -100,7 +100,7 @@ module.exports = {
              * 因为对于vendor，此插件对于有无/后缀都正常
              * 为了兼容'/'的情况，选择都加
              */
-            publicPath,
+            PUBLIC_PATH: publicPath,
             chunksSortMode: 'dependency',
         }, config)),
 
