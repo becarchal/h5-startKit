@@ -8,7 +8,7 @@ Deploy-Prod:
 
 
 Deploy-Test:
-  stage: deploy
+  stage: test
   script:
     - echo $CI_BUILD_REF_NAME
     - tar-cli fe_deploy -r /alidata/www/h5mo -a h5wxfront -c "${CI_BUILD_REF_NAME}-test" -s 121.43.104.208 --no-vhost
