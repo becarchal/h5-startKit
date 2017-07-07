@@ -1,3 +1,4 @@
 {
-    "root": "./doc"
+    "root": "./doc",
+    "public": "http://www.baidu.com/"
 }
