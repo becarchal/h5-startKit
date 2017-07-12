@@ -5,7 +5,7 @@
     "build:test": "rimraf dist && cross-env PUBLIC_PATH=http://cdn.tarsocial.com/h5wxfront/$(git symbolic-ref --short HEAD)-test/ webpack --progress --profile --colors --config ./build/webpack.prod.js",
     "dev": "webpack-dev-server --hot --inline --progress --profile --colors --config ./build/webpack.dev.js",
     "test": "./node_modules/karma-cli/bin/karma start",
-    "doc:serve": "gitbook serve",
+    "doc:server": "gitbook serve",
     "doc:build": "gitbook build"
   },
   "dependencies": {
