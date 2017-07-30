@@ -1,8 +1,9 @@
 
 var path = require('path')
-
+var address = require('address');
+ 
 module.exports = {
-    host: '0.0.0.0',
+    host: address.ip(),
     port: 80,
     publicPath: '/',
     alias: {
