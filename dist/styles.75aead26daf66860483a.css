@@ -1,0 +1,67 @@
+/*
+Icon classes can be used entirely standalone. They are named after their original file names.
+
+Example usage in HTML:
+
+`display: block` sprite:
+<div class="icon-home"></div>
+
+To change `display` (e.g. `display: inline-block;`), we suggest using a common CSS class:
+
+// CSS
+.icon {
+  display: inline-block;
+}
+
+// HTML
+<i class="icon icon-home"></i>
+*/
+.icon-1 {
+  background-image: url(http://cdn.tarsocial.com/h5wxfront/master-test/d0f40ce1e40d5bee9995c902a371103b.png);
+  background-position: 0px 0px;
+  width: 64px;
+  height: 64px;
+}
+.icon-2 {
+  background-image: url(http://cdn.tarsocial.com/h5wxfront/master-test/d0f40ce1e40d5bee9995c902a371103b.png);
+  background-position: -64px 0px;
+  width: 64px;
+  height: 64px;
+}
+
+@media (-webkit-min-device-pixel-ratio: 2),
+       (min-resolution: 192dpi) {
+  .icon-1 {
+    background-image: url(http://cdn.tarsocial.com/h5wxfront/master-test/b6d8c5b461e898cd3a85b4da2765b784.png);
+    background-size: 128px 64px;
+  }
+  .icon-2 {
+    background-image: url(http://cdn.tarsocial.com/h5wxfront/master-test/b6d8c5b461e898cd3a85b4da2765b784.png);
+    background-size: 128px 64px;
+  }
+}
+body {
+  font-size: 48px;
+}
+:-webkit-full-screen a {
+  display: -webkit-box;
+  display: flex;
+}
+:-moz-full-screen a {
+  display: flex;
+}
+:-ms-fullscreen a {
+  display: -ms-flexbox;
+  display: flex;
+}
+:fullscreen a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.block1 {
+  width: 100px;
+  height: 100px;
+}
+
+/*# sourceMappingURL=index.map*/

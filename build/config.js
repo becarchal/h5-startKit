@@ -5,5 +5,14 @@ module.exports = {
     publicPath: '/',
     alias: {
         lib: `${__dirname}/../lib`,
-    }
+    },
+    provide: {
+        $: "jquery",
+        _: 'lodash',
+    },
+    // provide
+    // autoprefixer,
+    // extraPostCSSPlugins,
+    // extensions
+    // alias
 }

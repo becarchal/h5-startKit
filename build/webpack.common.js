@@ -4,16 +4,19 @@ var InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin')
 var WebpackChunkHash = require("webpack-chunk-hash")
 var DashboardPlugin = require('webpack-dashboard/plugin')
 var path = require('path')
-var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
 var helper = require('./helper')
 var config = require('./config')
+var webpack = require('webpack')
+var autoprefixer = require('autoprefixer')
 
-const publicPath =  process.env.PUBLIC_PATH || config.publicPath || '/'
+var publicPath = process.env.PUBLIC_PATH || config.publicPath || '/'
+
+const spriteFolderName = 'spritesmith-generated'
 
 module.exports = {
+
     entry: {
         'index': ['babel-polyfill', path.join(__dirname, '/../src/index.js')],
     },
@@ -31,14 +34,9 @@ module.exports = {
     externals: config.extensions,
 
     resolve: {
-        extensions: ['.ts', '.js', '.json'],
-        alias: config.alias
-        // modules: [path.join(__dirname, 'src'), 'node_modules']
+        alias: config.alias,
+        extensions: ['.js', '.json'],
     },
-
-    // externals: {
-    //     dat: "dat"
-    // },
 
     module: {
         rules: [
@@ -54,47 +52,51 @@ module.exports = {
                 exclude: /node_modules|lib/,
             },
             {
-                test: /\.css$/,
-                use: ExtractTextPlugin.extract({
-                    use: 'css-loader'
-                })
-            },
-            {
-                test: /\.less$/,
-                use: ExtractTextPlugin.extract({
-                    use: ['css-loader', 'less-loader']
-                })
-            },
-            {
-                test: /\.sass$/,
-                use: ExtractTextPlugin.extract({
-                    use: ['css-loader', 'sass-loader']
-                })
-            },
-            {
                 test: /\.ejs$/,
+                exclude: /node_modules/,
                 use: {
                     loader: 'ejs-loader',
                     options: {
                         interpolate: '\\{\\{(.+?)\\}\\}',
                         evaluate: '\\[\\[(.+?)\\]\\]'
-                    }
+                    },
+                },
+            },
+            {
+                test: /\.html$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'html-loader',
+                    options: {
+                        interpolate: true
+                    },
                 }
             },
             {
+                test: /\.(jpe?g|png|gif|jpg|svg)$/i,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'file-loader'
+                },
+            },
+            {
                 test: /\.(woff|woff2|eot|ttf|svg)$/,
+                exclude: /node_modules/,
                 use: {
                     loader: 'file-loader',
-                }
+                },
             }
         ]
-
     },
 
     plugins: [
 
+        new webpack.DefinePlugin({
+            'process.env.PUBLIC_PATH': JSON.stringify(publicPath)
+        }),
+
         new HtmlWebpackPlugin(Object.assign({
-            template: 'src/index.ejs',
+            template: 'src/index.html',
             /**
              * 这里都会带上/后缀
              * 因为对于vendor，此插件对于有无/后缀都正常
@@ -104,8 +106,21 @@ module.exports = {
             chunksSortMode: 'dependency',
         }, config)),
 
-        new ExtractTextPlugin('styles.[chunkhash].css')
-
+        new webpack.LoaderOptionsPlugin({
+            options: {
+                postcss: [
+                    autoprefixer(config.autoprefixer || {
+                        browsers: [
+                            '>1%',
+                            'last 4 versions',
+                            'Firefox ESR',
+                            'not ie < 9', // React doesn't support IE8 anyway
+                        ],
+                    }),
+                    ...(config.extraPostCSSPlugins ? config.extraPostCSSPlugins : []),
+                ],
+            },
+        }),
 
     ].concat(helper.fsExistsSync(path.join(__dirname, '/../public')) ?
         new CopyWebpackPlugin([
@@ -117,3 +132,6 @@ module.exports = {
         .concat(config.provide ?
             new webpack.ProvidePlugin(config.provide) : [])
 }
+
+
+publicPath

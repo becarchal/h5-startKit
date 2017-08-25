@@ -2,20 +2,42 @@ const Merge = require('webpack-merge')
 const CommonConfig = require('./webpack.common.js')
 var webpack = require('webpack')
 var path = require('path')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 
 module.exports = Merge(CommonConfig, {
+    devtool: 'source-map',
     output: {
         filename: '[name].[chunkhash].js',
     },
 
     module: {
-        rules: [{
-            test: /\.(jpe?g|png|gif|jpg|svg)$/i,
-            exclude: /node_modules/,
-            use: [
-                'file-loader',
-                {
+        rules: [
+            {
+                test: /\.css$/,
+                exclude: /node_modules/,
+                use: ExtractTextPlugin.extract({
+                    use: [
+                        'css-loader',
+                        'postcss-loader',
+                    ],
+                })
+            },
+            {
+                test: /\.less$/,
+                exclude: /node_modules/,
+                use: ExtractTextPlugin.extract({
+                    use: [
+                        'css-loader',
+                        'postcss-loader',
+                        'less-loader',
+                    ],
+                })
+            },
+            {
+                test: /\.(jpe?g|png|gif|jpg|svg)$/i,
+                exclude: /node_modules/,
+                use: {
                     loader: 'image-webpack-loader',
                     options: {
                         mozjpeg: {
@@ -40,13 +62,14 @@ module.exports = Merge(CommonConfig, {
                             optimizationLevel: 7,
                             interlaced: false
                         }
-                    }
+                    },
                 }
-            ]
-        }]
+            }]
     },
 
     plugins: [
+
+        new ExtractTextPlugin('styles.[chunkhash].css'),
 
         new webpack.optimize.UglifyJsPlugin({
             beautify: false,

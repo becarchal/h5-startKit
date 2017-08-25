@@ -9,5 +9,8 @@ module.exports = {
             return false;
         }
         return true;
+    },
+    write(file, data) {
+        fs.writeFileSync(file, data)
     }
 }
